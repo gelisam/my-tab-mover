@@ -21,7 +21,7 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-NAME =		tab-mover
+NAME =		my-tab-mover
 VERSION =	9
 EXT_NAME =	$(subst -,_,$(NAME))-$(VERSION)
 
