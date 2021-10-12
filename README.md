@@ -23,8 +23,5 @@ that case, I'll have to find a better name than "My Tab Mover". Perhaps
 
 ## License
 
-The code for Tab Mover confusingly says that all the files are Copyright (C)
-2017 Guido Berhoerster, but also that the source code is subject to the terms
-of the Mozilla Public License, which says I am free to copy and modify that
-source code. So I think the License trumps the Copyright and that I am thus
-allowed to create this fork?
+Tab Mover is Copyright (C) 2017 Guido Berhoerster. My (minor) modifications are
+public domain. Both are published under the Mozilla Public License.
