@@ -14,11 +14,11 @@ Tab Mover is a fork of Tab Mover with the following differences:
 
 ## Future Plans
 
-These differences don't seem big enough to warrant uploading the extension to
-https://addons.mozilla.org, but even if just one other person than myself finds
-this variant useful, then I think it would be worth the effort to upload it. In
-that case, I'll have to find a better name than "My Tab Mover". Perhaps
-"gelisam's Tab Mover"?
+I do not plan, and am not legally allowed, to publish this extension to
+https://addons.mozilla.org, as Firefox's [Addon Policy](https://extensionworkshop.com/documentation/publish/add-on-policies/)
+specifically states that "If the add-on is a fork of another add-on, [it must]
+provide a significant difference in functionality and/or code." The differences
+above don't seem big enough to satisfy that requirement.
 
 
 ## License
