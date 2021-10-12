@@ -71,7 +71,7 @@ async function onMenuShown(info, tab)  {
             creatingMenus.push(createMenuItem({
                 onclick: (info, tab) => moveTabs(tab, targetWindow.id),
                 parentId: 'move-menu',
-                title: targetWindow.title
+                title: targetWindow.tabs[0].title
             }));
             moveMenuItems++;
         }
