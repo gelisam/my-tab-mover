@@ -52,43 +52,6 @@ async function moveTabs(tab, targetWindowId) {
     }
 }
 
-async function reopenTabs(tab, targetWindowId) {
-    // if the current tab is part of a highlighted group then reopen the whole
-    // group
-    let selectedTabs = (tab.highlighted) ? await browser.tabs.query({
-        highlighted: true,
-        windowId: tab.windowId
-    }) : [tab];
-    // filter out privileged tabs which cannot be reopened
-    selectedTabs = selectedTabs.filter(selectedTab =>
-            ALLOWED_PROTOCOLS.has(new URL(selectedTab.url).protocol));
-    if (selectedTabs.length === 0) {
-        return;
-    }
-    let activeTab = selectedTabs.find(tab => tab.active);
-    // the actually active tab may have been filtered out above, fall back to
-    // the first highlighted one
-    if (typeof activeTab === 'undefined') {
-        activeTab = selectedTabs[0];
-        activeTab.active = true;
-    }
-
-    let newTabs = await Promise.all(selectedTabs.map(selectedTab => {
-        return browser.tabs.create({
-            url: selectedTab.url,
-            windowId: targetWindowId,
-            active: selectedTab.active
-        });
-    }));
-    // tabs can only be highlighted after they have been created
-    for (let tab of newTabs) {
-        if (!tab.active) {
-            browser.tabs.update(tab.id, {active: false, highlighted: true});
-        }
-    }
-    browser.tabs.remove(selectedTabs.map(selectedTab => selectedTab.id));
-}
-
 async function onMenuShown(info, tab)  {
     let menuInstanceId = nextMenuInstanceId++;
     lastMenuInstanceId = menuInstanceId;
@@ -111,18 +74,10 @@ async function onMenuShown(info, tab)  {
                 title: targetWindow.title
             }));
             moveMenuItems++;
-        } else {
-            creatingMenus.push(createMenuItem({
-                onclick: (info, tab) => reopenTabs(tab, targetWindow.id),
-                parentId: 'reopen-menu',
-                title: targetWindow.title
-            }));
-            reopenMenuItems++;
         }
     }
     let updatingMenus = [
-        browser.menus.update('move-menu', {enabled: moveMenuItems > 0}),
-        browser.menus.update('reopen-menu', {enabled: reopenMenuItems > 0})
+        browser.menus.update('move-menu', {enabled: moveMenuItems > 0})
     ];
     await Promise.all([...creatingMenus, ...updatingMenus]);
     let newWindowMenuIds = await Promise.all(creatingMenus);
@@ -141,7 +96,6 @@ async function onMenuShown(info, tab)  {
 async function onMenuHidden() {
     lastMenuInstanceId = 0;
     browser.menus.update('move-menu', {enabled: false});
-    browser.menus.update('reopen-menu', {enabled: false});
     for (let menuId of windowMenuIds) {
         browser.menus.remove(menuId);
     }
@@ -153,12 +107,6 @@ async function onMenuHidden() {
         createMenuItem({
             id: 'move-menu',
             title: browser.i18n.getMessage('moveToWindowMenu'),
-            enabled: false,
-            contexts: ['tab']
-        }),
-        createMenuItem({
-            id: 'reopen-menu',
-            title: browser.i18n.getMessage('reopenInWindowMenu'),
             enabled: false,
             contexts: ['tab']
         })
