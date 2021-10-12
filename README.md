@@ -12,6 +12,16 @@ Tab Mover is a fork of Tab Mover with the following differences:
     pinning a tab whose title is meaningful to you.
 
 
+## Usage
+
+In order to move a tab between windows, open the tab context menu by clicking
+on the tab using the right mouse button, then open the submenu named
+"Move to Window", and finally select a window from that submenu. Multiple tabs
+can be moved by opening the context menu on a tab belonging to a group of
+highlighted tabs (highlighting multiple tabs is possible starting from Firefox
+62 if the preference browser.tabs.multiselect is set to "true").
+
+
 ## Future Plans
 
 I do not plan, and am not legally allowed, to publish this extension to
