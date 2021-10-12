@@ -35,7 +35,7 @@ DIST_FILES =	manifest.json \
 		background.js \
 		COPYING \
 		NEWS \
-		README \
+		README.md \
 		$(wildcard _locales/*/messages.json) \
 		$(BITMAP_ICONS)
 
