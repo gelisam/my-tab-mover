@@ -10,6 +10,8 @@ Tab Mover is a fork of Tab Mover with the following differences:
 2.  The name of each window is obtained from its first tab rather than its
     current tab. This makes it possible to give a permanent name to a window by
     pinning a tab whose title is meaningful to you.
+3.  It also supports opening links in an existing window (identified by the
+    title of its first tab).
 
 
 ## Usage
@@ -20,6 +22,10 @@ on the tab using the right mouse button, then open the submenu named
 can be moved by opening the context menu on a tab belonging to a group of
 highlighted tabs (highlighting multiple tabs is possible starting from Firefox
 62 if the preference browser.tabs.multiselect is set to "true").
+
+In order to open a link to an existing window, right-click a link, open the
+submenu named "Open Link in Another Window" and select a window from that
+submenu.
 
 
 ## Future Plans

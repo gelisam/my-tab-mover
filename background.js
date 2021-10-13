@@ -52,6 +52,14 @@ async function moveTabs(tab, targetWindowId) {
     }
 }
 
+async function openLink(url, targetWindowId) {
+    await browser.tabs.create({
+      active: false,
+      url: url,
+      windowId: targetWindowId
+    });
+}
+
 async function onMenuShown(info, tab)  {
     let menuInstanceId = nextMenuInstanceId++;
     lastMenuInstanceId = menuInstanceId;
@@ -61,7 +69,7 @@ async function onMenuShown(info, tab)  {
     });
     let creatingMenus = [];
     let moveMenuItems = 0;
-    let reopenMenuItems = 0;
+    let openMenuItems = 0;
     for (let targetWindow of targetWindows) {
         if (targetWindow.id === tab.windowId) {
             // ignore active window
@@ -75,9 +83,17 @@ async function onMenuShown(info, tab)  {
             }));
             moveMenuItems++;
         }
+
+        creatingMenus.push(createMenuItem({
+            onclick: (info, tab) => openLink(info.linkUrl, targetWindow.id),
+            parentId: 'open-menu',
+            title: targetWindow.tabs[0].title
+        }));
+        openMenuItems++;
     }
     let updatingMenus = [
-        browser.menus.update('move-menu', {enabled: moveMenuItems > 0})
+        browser.menus.update('move-menu', {enabled: moveMenuItems > 0}),
+        browser.menus.update('open-menu', {enabled: openMenuItems > 0})
     ];
     await Promise.all([...creatingMenus, ...updatingMenus]);
     let newWindowMenuIds = await Promise.all(creatingMenus);
@@ -109,6 +125,12 @@ async function onMenuHidden() {
             title: browser.i18n.getMessage('moveToWindowMenu'),
             enabled: false,
             contexts: ['tab']
+        }),
+        createMenuItem({
+            id: 'open-menu',
+            title: browser.i18n.getMessage('openInWindowMenu'),
+            enabled: false,
+            contexts: ['link']
         })
     ]);
     browser.menus.onShown.addListener(onMenuShown);

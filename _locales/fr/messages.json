@@ -11,6 +11,10 @@
         "message": "Déplacer vers une fenêtre",
         "description": "Label of the submenu for selecting a window to which the current tab should be moved to."
     },
+    "openInWindowMenu": {
+        "message": "Ouvrir lien dans une autre fenêtre",
+        "description": "Label of the submenu for selecting a window in which the right-clicked link should be opened."
+    },
     "reopenInWindowMenu": {
         "message": "Fermer puis rouvrir dans une fenêtre",
         "description": "Label of the submenu for selecting a window in which the current tab should be reopened in."
