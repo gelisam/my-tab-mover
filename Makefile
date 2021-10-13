@@ -22,7 +22,7 @@
 #
 
 NAME =		my-tab-mover
-VERSION =	9
+VERSION =	10
 EXT_NAME =	$(subst -,_,$(NAME))-$(VERSION)
 
 INKSCAPE := 	inkscape
